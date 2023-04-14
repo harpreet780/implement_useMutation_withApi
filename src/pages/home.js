@@ -13,28 +13,26 @@ const Home = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const handleApi = async () => {
-        return axios.post('https://dummyjson.com/auth/login',{
-            username: formData.username,
-            password: formData.password,
-        }).then((res)=> 
-        console.log(res.data))
+    const handleApi = async (data) => {
+        return axios.post('https://dummyjson.com/auth/login', data).then((res)=> 
+        console.log(res.data,"resss"))
         .catch((error)=>{
             console.log(error)
         })
     }
-    const { isLoading, isError, error, mutate } = useMutation(() => handleApi())
-    const handleSubmit = () => {
-        let data = {
+    const { isLoading, isError, error, mutate } = useMutation((data) => handleApi(data))
+    const handleSubmit = (data) => {
+         data = {
             username: formData.username,
             password: formData.password
         }
         mutate(data)
+        console.log(data,"data")
     }
     return (
         <div className="pageWrapper">
             <div className="formWrap">
-                <h2 className='text-center'>Form</h2>
+                <h2 className='text-center text-decoration-underline'>Form With UseMutation</h2>
                 <Label>Username:</Label>
                 <Input
                     type="username"
